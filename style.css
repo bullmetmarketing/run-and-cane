@@ -300,6 +300,14 @@ article.br-swipe-product-info p.br-swipe-product-info-prize{
   padding-top: 0;
   font-size: 1.5em;
 }
+article.br-swipe-product-info p.br-swipper-product-counter{
+  margin: 0;
+  padding: 0;
+  font-size: 0.8em;
+}
+article.br-swipe-product-info p.br-swipper-product-counter span{
+  font-weight: bold;
+}
 p.br-swipe-product-info-prize-ie{
   padding-top: 0;
   font-size: 1.5em;

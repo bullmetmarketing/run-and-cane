@@ -67,6 +67,9 @@ var main = function main() {
     this.brSwiperProductCTA = this.brSwiperContainer.querySelector(
       ".br-swipe-product-info a"
     );
+    this.brSwiperProductCounter = this.brSwiperContainer.querySelector(
+      ".br-swipper-product-counter"
+    );
     this.brSwiperFocus;
     this.brSwiperNext;
     this.brSwiperPrev;
@@ -101,19 +104,8 @@ var main = function main() {
 
       _this.setProductWidth();
 
-      var centralPosition;
-      var swiperPosition;
-
-      if (model.productList.length % 2 === 0) {
-        centralPosition = Math.ceil(model.productList.length / 2);
-        swiperPosition = Math.ceil(
-          (model.productList.length - model.productsToShow) / 2
-        );
-      } else {
-        centralPosition = Math.floor(model.productList.length / 2);
-        swiperPosition = 0;
-      }
-
+      var centralPosition = Math.ceil(model.productList.length / 2);
+      var swiperPosition = 0;
       selectors.brSwiperFocus = model.productList[centralPosition];
       selectors.brSwiperPrev = model.productList[centralPosition - 1];
       selectors.brSwiperPrev.addEventListener(
@@ -127,7 +119,7 @@ var main = function main() {
       selectors.brSwiperPrev.classList.add("prev");
       selectors.brSwiperNext.classList.add("next");
       selectors.brSwiperWrapper.style.left = "-".concat(
-        model.productWidth * swiperPosition,
+        model.productWidth / 2 + model.productWidth * swiperPosition,
         "px"
       );
 
@@ -137,9 +129,13 @@ var main = function main() {
     this.createProductCTA = function (selector) {
       var productInfo = selector.getAttribute("data-product");
       var productPrize = selector.getAttribute("data-prize");
+      var productOrder = Number(selector.getAttribute("data-list")) + 1;
       var productLink = selector.querySelector("a").getAttribute("href");
       selectors.brSwiperProductInfo.innerHTML = productInfo;
       selectors.brSwiperProductPrize.innerHTML = productPrize;
+      selectors.brSwiperProductCounter.innerHTML = "Producto <span>"
+        .concat(productOrder, "</span> de <span>")
+        .concat(model.productList.length, "</span>");
       selectors.brSwiperProductCTA.setAttribute("href", productLink);
     };
 

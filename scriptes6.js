@@ -11,6 +11,7 @@ const main = () => {
     this.brSwiperProductInfo = this.brSwiperContainer.querySelector('.br-swipe-product-info-title');
     this.brSwiperProductPrize = this.brSwiperContainer.querySelector('.br-swipe-product-info-prize');
     this.brSwiperProductCTA = this.brSwiperContainer.querySelector('.br-swipe-product-info a');
+    this.brSwiperProductCounter = this.brSwiperContainer.querySelector('.br-swipper-product-counter');
     this.brSwiperFocus; 
     this.brSwiperNext; 
     this.brSwiperPrev;     
@@ -39,15 +40,9 @@ const main = () => {
     this.setStartingPosition = () => {
       this.setProductElements()
       this.setProductWidth();
-      let centralPosition;
-      let swiperPosition;
-      if(model.productList.length%2 === 0) {
-        centralPosition = Math.ceil(model.productList.length / 2);
-        swiperPosition = Math.ceil((model.productList.length - model.productsToShow) / 2);
-      } else {
-        centralPosition = Math.floor(model.productList.length / 2);
-        swiperPosition = 0;
-      }
+      let centralPosition = Math.ceil(model.productList.length / 2);
+      let swiperPosition = 0;
+
       selectors.brSwiperFocus = model.productList[centralPosition];
       selectors.brSwiperPrev = model.productList[centralPosition - 1];
       selectors.brSwiperPrev.addEventListener('click', events.onPrevious, false);
@@ -56,15 +51,17 @@ const main = () => {
       selectors.brSwiperFocus.classList.add('focus');
       selectors.brSwiperPrev.classList.add('prev');      
       selectors.brSwiperNext.classList.add('next');
-      selectors.brSwiperWrapper.style.left = `-${model.productWidth * swiperPosition}px`;
+      selectors.brSwiperWrapper.style.left = `-${model.productWidth / 2 + (model.productWidth * swiperPosition)}px`;
       this.createProductCTA(selectors.brSwiperFocus);
     };
     this.createProductCTA = (selector) => {
       const productInfo = selector.getAttribute('data-product');
       const productPrize = selector.getAttribute('data-prize');
+      const productOrder = Number(selector.getAttribute('data-list')) + 1;
       const productLink = selector.querySelector('a').getAttribute('href');
       selectors.brSwiperProductInfo.innerHTML = productInfo;
       selectors.brSwiperProductPrize.innerHTML = productPrize;
+      selectors.brSwiperProductCounter.innerHTML = `Producto <span>${productOrder}</span> de <span>${model.productList.length}</span>`
       selectors.brSwiperProductCTA.setAttribute('href', productLink );
     };
     this.cleanClassAndEvents = () => {
